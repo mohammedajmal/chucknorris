@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chucknorris-joke-deployment
+  labels:
+    app: chucknorris-joke
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chucknorris-joke
+  template:
+    metadata:
+      labels:
+        app: chucknorris-joke
+    spec:
+      containers:
+        - name: chucknorris-joke
+          image: prateek076/chucknorris-joke:v0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: db_root_password
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: db_root_password
+            - name: db_name
+              value: ChucknorrisDB
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chucknorris-service
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: chucknorris-joke
+  type: LoadBalancer 
