@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chucknorris-joke-deployment
+  name: chucknorris
   labels:
     app: chucknorris-joke
 spec:
@@ -17,10 +17,8 @@ spec:
     spec:
       containers:
         - name: chucknorris-joke
-          image: chucknorris-joke
-          imagePullPolicy: IfNotPresent
-      imagePullSecrets:
-        - name: myregistrykey
+          image: mayoob/chucknorris-joke
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
@@ -31,6 +29,8 @@ spec:
                   key: db_root_password
             - name: db_name
               value: ChucknorrisDB
+      imagePullSecrets:
+        - name: myregistrykey
 
 ---
 apiVersion: v1
