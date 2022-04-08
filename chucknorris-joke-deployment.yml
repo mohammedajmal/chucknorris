@@ -17,8 +17,10 @@ spec:
     spec:
       containers:
         - name: chucknorris-joke
-          image: prateek076/chucknorris-joke:v0.1.0
+          image: chucknorris-joke
           imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: myregistrykey
           ports:
             - containerPort: 5000
           env:
