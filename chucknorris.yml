@@ -6,7 +6,7 @@ metadata:
   labels:
     app: chucknorris-joke
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: chucknorris-joke
@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: chucknorris-joke
-          image: mayoob/chucknorris-joke
-          imagePullPolicy: Always
+          image: mayoob/chucknorris-joke:v0.0.1
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
           env:
